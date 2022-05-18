@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: ./php
+    restart: 'always'
+    working_dir: '/app'
+    volumes: [ '../:/app' ]
+    environment:
+      - NGINX_WEB_ROOT=/app/app/public
+      - NGINX_PHP_FALLBACK=/index.php
+      - NGINX_PHP_LOCATION=^/index\.php(/|$$)
+      - INFLUXDB_DSN=influxdb://influxdb:8086
+    depends_on: ['influxdb']
+    ports: [ '80:80' ]
+
+  influxdb:
+    image: 'influxdb:1.4'
+    volumes:
+      - 'influxdb:/var/lib/influxdb'
+    environment:
+      - INFLUXDB_DB=testdb
+    ports: [ '8086:8086' ]
+
+  # chronograf:
+  #   image: 'chronograf:1.4'
+  #   entrypoint: 'chronograf --kapacitor-url=http://kapacitor:9092 --influxdb-url=http://influxdb:8086'
+  #   depends_on: ['influxdb', 'kapacitor']
+  #   ports: ['8888:8888']
+
+  # kapacitor:
+  #   image: 'kapacitor:1.4'
+  #   depends_on: ['influxdb' ]
+  #   environment:
+  #     - KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086
+  #     - KAPACITOR_HOSTNAME=kapacitor
+volumes:
+  influxdb:
