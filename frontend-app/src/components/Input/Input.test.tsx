@@ -6,7 +6,7 @@ afterEach(cleanup);
 
 it("Should render the input element", () => {
   let data = "";
-  const onChange = (e) => data = e.target.value;
+  const onChange:React.ChangeEventHandler<HTMLInputElement> = (e) => data = e.target.value;
 
   const { getByText, getByRole } = render(
     <Input type="text" placeholder="" onChange={onChange} />
