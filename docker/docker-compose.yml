@@ -25,23 +25,14 @@ services:
       - INFLUXDB_DB=testdb
     ports: [ '8086:8086' ]
 
-  # frontend-app:
-  #   container_name: frontend-app
-  #   build:
-  #     context: ./node
-  #   working_dir: '/app'
-  #   volumes: [../frontend-app/:/app]
-  #   ports:
-  #     - 3000:3000
-  
-  # app:
-  #   container_name: app-dev
-  #   build:
-  #     context: ./node
-  #   working_dir: '/app'
-  #   volumes: [../app/:/app]
-  #   ports:
-  #     - 3000:3000
+  frontend-app:
+    container_name: frontend-app
+    build:
+      context: ./node
+    working_dir: '/app'
+    volumes: [../frontend-app/:/app]
+    ports:
+      - 3000:3000
 
 volumes:
   influxdb:
