@@ -26,6 +26,8 @@ The data are stored in an InfluxDB database. I have chosen this DB because it le
 - Add input validation
 - Add API errors handler
 - Add chart to visualize data
+- Add active class to buttons
 
 ## BACKEND
 - Add more tests (for instance, to check exception cases)
+- Add a better way to handle group clause
