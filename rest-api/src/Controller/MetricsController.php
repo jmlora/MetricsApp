@@ -24,10 +24,10 @@ class MetricsController extends AbstractController
     {
         $points = [];
 
-        if ($request->query->get('groupBy')) {
-            $points = $this->metricsService->getGroupedPoints(true);
+        if ($group = $request->query->get('groupBy')) {
+            $points = $this->metricsService->getGroupedPoints($group);
         } else {
-            $points = $this->metricsService->getPoints(true);
+            $points = $this->metricsService->getPoints();
         }
 
         return $this->json($points);

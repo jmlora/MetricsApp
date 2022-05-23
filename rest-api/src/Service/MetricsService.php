@@ -11,6 +11,12 @@ class MetricsService
 {
     const TEMP_METRIC = 'temperature';
 
+    const GROUP_VALUES = [
+        'min' => '1m',
+        'hour' => '1h',
+        'day' => '1d',
+    ];
+
     protected $database;
 
     public function __construct(Database $database)
@@ -34,12 +40,19 @@ class MetricsService
      * Get points grouped by time
      * @return array Array of points
      */
-    public function getGroupedPoints():array
+    public function getGroupedPoints(string $group):array
     {
-        $query = 'select sum(value) as value from ' . self::TEMP_METRIC . ' group by time(1d) order by time DESC';
+        $groupTime = $this->getGroupTime($group);
+
+        $query = 'select mean(value) as value from ' . self::TEMP_METRIC . " group by time($groupTime) order by time DESC";
         $result = $this->database->query($query);
         $points = $result->getPoints();
         return $points;
+    }
+
+    public function getGroupTime(string $group):string
+    {
+        return array_key_exists($group, self::GROUP_VALUES) ? self::GROUP_VALUES[$group] : self::GROUP_VALUES['day'];
     }
 
     /**
