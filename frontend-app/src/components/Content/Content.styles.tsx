@@ -13,6 +13,11 @@ export const Content = styled.div`
     position: fixed;
     right: 2rem;
     top: 7rem;
+
+    @media (max-width: 750px) {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 `
 
 export const FeedBack = styled.div`
@@ -21,7 +26,15 @@ export const FeedBack = styled.div`
 `
 
 export const LeftColumn = styled.div`
+    display: flex;
     width: calc(300px);
+
+    @media (max-width: 750px) {
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 30px;
+        width: 100%;
+    }
 `
 
 export const RightColumn = styled.div`
@@ -30,4 +43,17 @@ export const RightColumn = styled.div`
     justify-content: space-around;
     padding-left: 50px;
     width: calc(100vw - 300px);
+
+    @media (max-width: 750px) {
+        padding-left: 0;
+        width: 100%;
+    }
+`
+
+export const ButtonColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    * {
+        margin-bottom: 20px;
+    }
 `

@@ -16,10 +16,14 @@ type PostApiResponse = {
 }
 
 function Content() {
-    const [measure, setMeasure] = useState("");
-    const [responseMessage, setResponseMessage] = useState("");
+    const [measure, setMeasure] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
     const [data, setData] = useState<IPoint[]>([]);
-    const [groupData, setGroupData] = useState(false);
+    const [groupData, setGroupData] = useState('');
+
+    const GROUP_BY_MIN = 'min';
+    const GROUP_BY_HOUR = 'hour';
+    const GROUP_BY_DAY = 'day';
 
     const url = 'http://localhost/metrics';
 
@@ -29,13 +33,25 @@ function Content() {
     }, []);
 
     useEffect(() => {
-        getFetch<IPoint[]>(groupData ? `${url}?groupBy=date` : url)
+        getFetch<IPoint[]>(groupData.length > 0 ? `${url}?groupBy=${groupData}` : url)
         .then((resp) => setData(resp))
 
     }, [groupData]);
 
-    const handleClickGroup = () => {
-        setGroupData(!groupData);
+    const handleClickRawData = () => {
+        setGroupData('');
+    }
+
+    const handleClickGroupByMin = () => {
+        setGroupData(GROUP_BY_MIN);
+    }
+
+    const handleClickGroupByHour = () => {
+        setGroupData(GROUP_BY_HOUR);
+    }
+
+    const handleClickGroupByDay = () => {
+        setGroupData(GROUP_BY_DAY);
     }
 
     const handleSubmit = () => {
@@ -59,7 +75,12 @@ function Content() {
         </S.LeftColumn>
         <S.RightColumn>
             <MetricsTable points={data} />
-            <Button onClick={handleClickGroup}>{groupData ? 'RAW DATA' : 'GROUP BY DATE'}</Button>
+            <S.ButtonColumn>
+                <Button onClick={handleClickRawData}>RAW DATA</Button>
+                <Button onClick={handleClickGroupByMin}>GROUP BY MIN</Button>
+                <Button onClick={handleClickGroupByHour}>GROUP BY HOUR</Button>
+                <Button onClick={handleClickGroupByDay}>GROUP BY DATE</Button>
+            </S.ButtonColumn>
         </S.RightColumn>
     </S.Content>    
 }

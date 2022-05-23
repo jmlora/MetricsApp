@@ -13,10 +13,10 @@ function MetricsTable({
                 </tr>
             </thead>
             <tbody>
-                {points.map(point =>
-                        <tr>
+                {points.map((point, index) =>
+                        <tr key={index}>
                             <td>{point.time}</td>
-                            <td>{point.value}</td>
+                            <td>{Math.round(point.value)}</td>
                         </tr>
                     )
                 }
