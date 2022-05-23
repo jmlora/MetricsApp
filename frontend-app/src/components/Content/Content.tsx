@@ -24,7 +24,7 @@ function Content() {
     const url = 'http://localhost/metrics';
 
     useEffect(() => {
-        getFetch<IPoint[]>(groupData ? `${url}?groupBy=date` : url)
+        getFetch<IPoint[]>(url)
             .then((resp) => setData(resp))
     }, []);
 
