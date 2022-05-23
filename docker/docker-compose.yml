@@ -4,7 +4,8 @@ services:
   php:
     container_name: rest-api
     build:
-      context: ./php
+      context: ../
+      dockerfile: ./docker/php/Dockerfile
     restart: 'always'
     working_dir: '/app'
     volumes: [ '../:/app' ]
@@ -28,7 +29,8 @@ services:
   frontend-app:
     container_name: frontend-app
     build:
-      context: ./node
+      context: ../
+      dockerfile: ./docker/node/Dockerfile
     working_dir: '/app'
     volumes: [../frontend-app/:/app]
     ports:
